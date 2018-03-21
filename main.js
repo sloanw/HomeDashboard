@@ -7,11 +7,53 @@ window.onload = function () {
 	this.document.addEventListener('redraw', RefreshPage);
 };
 
+var testData = (function () {
+	return {
+		packages: [
+			{
+				"Id": 285443490,
+				"PropertyId": 3902,
+				"UnitOccupancyId": 1473181,
+				"TypeId": 63673,
+				"LocationId": null,
+				"Description": "USPS",
+				"IsOpen": true,
+				"CreateUserId": 3287231,
+				"OpenComment": "amazon pkg 420100699361289697090191754363",
+				"CreateDate": null,
+				"LastChangeDate": null,
+				"OpenDate": null,
+				"CloseComment": "",
+				"CloseUserId": null,
+				"CloseDate": null,
+				"NotificationUserId": 3538118
+			}, {
+				"Id": 285557302,
+				"PropertyId": 3902,
+				"UnitOccupancyId": 1473181,
+				"TypeId": 63673,
+				"LocationId": null,
+				"Description": "USPS",
+				"IsOpen": true,
+				"CreateUserId": 4143601,
+				"OpenComment": "420100699341989697090037048644 Amazon Fulfillment Service ",
+				"CreateDate": null,
+				"LastChangeDate": null,
+				"OpenDate": null,
+				"CloseComment": "",
+				"CloseUserId": null,
+				"CloseDate": null,
+				"NotificationUserId": null
+			}
+		]
+	}
+})();
+
 function RefreshPage() {
-	document.getElementById("header").innerText = `you have ${packages.length} packages`;
-	var outupt = document.getElementById("output");
-	packages.forEach(package => {
-		output.innerText += package.OpenComment;
+	var container = document.getElementById("packages");
+	testData.packages.forEach(package => {
+		var node = document.createElement('div');
+		container.innerText += package.OpenComment;
 	});
 }
 
