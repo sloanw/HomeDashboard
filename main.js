@@ -52,8 +52,9 @@ var testData = (function () {
 function RefreshPage() {
 	var container = document.getElementById("packages");
 	testData.packages.forEach(package => {
-		var node = document.createElement('div');
-		container.innerText += package.OpenComment;
+		var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
+		var node = document.createRange().createContextualFragment(html);
+		container.appendChild(node);
 	});
 }
 
@@ -81,3 +82,41 @@ function RefreshPackages() {
 				.catch(err => alert(err));
 		});
 }
+
+class PackageElement extends HTMLElement {
+	constructor() {
+		super();
+
+		var pkgType = this.hasAttribute('type') ? this.getAttribute('type') : undefined;
+		var pkgDesc = this.hasAttribute('descr') ? this.getAttribute('descr') : undefined;
+
+		var shadow = this.attachShadow({ mode: 'open' });
+		var container = document.createElement('div');
+		container.setAttribute('class', 'package');
+
+		var img = document.createElement('img');
+		switch (pkgType) {
+			case 'USPS':
+				img.src = 'images/pkg_USPS.png';
+				break;
+			case 'DHL':
+				img.src = 'images/pkg_DHL.png';
+				break;
+			case 'UPS':
+				img.src = 'images/pkg_UPS.png';
+				break;
+		}
+		container.appendChild(img);
+
+		var text = document.createElement('span');
+		text.innerText = pkgDesc;
+		container.appendChild(text);
+
+		var style = document.createElement('style');
+		style.textContent = '';
+		
+		shadow.appendChild(style);
+		shadow.appendChild(container);
+	}
+}
+customElements.define('package-item', PackageElement);
