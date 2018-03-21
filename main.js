@@ -1,9 +1,21 @@
+var redraw = new Event('redraw');
 window.onload = function () {
 	this.document.querySelector('button').addEventListener('click', function () {
 		RefreshPackages();
 	});
+
+	this.document.addEventListener('redraw', RefreshPage);
 };
 
+function RefreshPage() {
+	document.getElementById("header").innerText = `you have ${packages.length} packages`;
+	var outupt = document.getElementById("output");
+	packages.forEach(package => {
+		output.innerText += package.OpenComment;
+	});
+}
+
+var packages = [];
 function RefreshPackages() {
 	oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
 		.then(token => {
@@ -21,11 +33,8 @@ function RefreshPackages() {
 			fetch(`${BuildingLink.apiURL}/EventLog/Resident/v1/Events?device-id=${BuildingLink.deviceID}&subscription-key=${BuildingLink.apikey}`, init)
 				.then((response) => response.json())
 				.then(function (data) {
-					document.getElementById("header").innerText = `you have ${data.value.length} packages`;
-					var outupt = document.getElementById("output");
-					data.value.forEach(package => {
-						output.innerText += package.OpenComment;
-					});
+					packages = data.value;
+					document.dispatchEvent(redraw);
 				})
 				.catch(err => alert(err));
 		});
