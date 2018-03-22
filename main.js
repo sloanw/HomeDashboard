@@ -51,7 +51,9 @@ var testData = (function () {
 
 function RefreshPage() {
 	var container = document.getElementById("packages");
-	testData.packages.forEach(package => {
+	container.innerHTML = "";
+	
+	packages.forEach(package => {
 		var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
 		var node = document.createRange().createContextualFragment(html);
 		container.appendChild(node);
@@ -94,6 +96,9 @@ class PackageElement extends HTMLElement {
 		var container = document.createElement('div');
 		container.setAttribute('class', 'package');
 
+		var imgContainer = document.createElement('div');
+		imgContainer.setAttribute('class', 'image');
+
 		var img = document.createElement('img');
 		switch (pkgType) {
 			case 'USPS':
@@ -105,18 +110,46 @@ class PackageElement extends HTMLElement {
 			case 'UPS':
 				img.src = 'images/pkg_UPS.png';
 				break;
+			case 'Fedex':
+				img.src = 'images/pkg_FedEx.png';
+				break;
+			default:
+				img.src = 'images/pkg_Package.png';
 		}
-		container.appendChild(img);
+		imgContainer.appendChild(img);
+		container.appendChild(imgContainer);
 
-		var text = document.createElement('span');
+		var text = document.createElement('div');
+		text.setAttribute('class', 'description');
 		text.innerText = pkgDesc;
 		container.appendChild(text);
 
 		var style = document.createElement('style');
-		style.textContent = '';
-		
+		style.textContent = `.package {
+	height: 4em;
+	width: 12em;
+	display: inline-block;
+	margin: auto;
+	overflow: hidden;
+	margin: 1em;
+}
+
+.image {
+    display: block;
+    padding: 1em;
+    float: left;
+}
+
+.description {
+    height: 3em;
+    display: block;
+    width: 6em;
+    float: right;
+}`;
+
 		shadow.appendChild(style);
 		shadow.appendChild(container);
 	}
 }
+
 customElements.define('package-item', PackageElement);
