@@ -127,7 +127,7 @@ class PackageElement extends HTMLElement {
 		var style = document.createElement('style');
 		style.textContent = `.package {
 	height: 4em;
-	width: 12em;
+	width: 13em;
 	display: inline-block;
 	margin: auto;
 	overflow: hidden;
@@ -143,7 +143,7 @@ class PackageElement extends HTMLElement {
 .description {
     height: 3em;
     display: block;
-    width: 6em;
+    width: 8em;
     float: right;
 }`;
 
