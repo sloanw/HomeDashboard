@@ -1,10 +1,9 @@
 var redraw = new Event('redraw');
 window.onload = function () {
-	this.document.querySelector('button').addEventListener('click', function () {
-		RefreshPackages();
-	});
-
 	this.document.addEventListener('redraw', RefreshPage);
+
+
+	RefreshPackages();
 };
 
 var testData = (function () {
