@@ -70,8 +70,10 @@ function RefreshPage() {
 		container.appendChild(node);
 	});
 
-	container = document.getElementById("weather");
-	container.innerText = weather_data.currently.apparentTemperature;
+	if (weather_data && weather_data.currently) {
+		container = document.getElementById("weather");
+		container.innerText = weather_data.currently.apparentTemperature;
+	}	
 }
 
 function RefreshPackages() {
