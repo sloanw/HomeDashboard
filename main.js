@@ -4,12 +4,13 @@ window.onload = function () {
 
 
 	RefreshPackages();
+	RefreshWeather();
 };
 
 function Scheduler(period, callback) {
 	window.setTimeout(function () {
 		callback();
-		
+
 		Scheduler(period, callback);
 	}, period);
 }
@@ -59,12 +60,39 @@ var testData = (function () {
 function RefreshPage() {
 	var container = document.getElementById("packages");
 	container.innerHTML = "";
-	
+
 	packages.forEach(package => {
 		var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
 		var node = document.createRange().createContextualFragment(html);
 		container.appendChild(node);
 	});
+}
+
+var blocks = {
+    now : "currently",
+    min : "minutely",
+    hrs : "hourly",
+    day : "daily",
+    msg : "alerts",
+    flg : "flags"
+};
+
+var weather = [];
+function RefreshWeather() {
+	var apiURL = "https://api.darksky.net/forecast";
+	var lat = Weather.position.latitude;
+	var lon = Weather.position.longitude;
+	var url = `${apiURL}/${Weather.apikey}/${lat},${lon}`;
+
+	var args = { exclude: blocks.min + "," + blocks.day + "," + blocks.flg };
+
+	$http(url)
+		.get(args)
+		.then(response => {
+			weather = JSON.parse(response);
+			document.dispatchEvent(redraw);
+		})
+		.catch(err => { console.log(err) });
 }
 
 var packages = [];
