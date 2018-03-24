@@ -66,6 +66,9 @@ function RefreshPage() {
 		var node = document.createRange().createContextualFragment(html);
 		container.appendChild(node);
 	});
+
+	container = document.getElementById("weather");
+	container.innerText = weather.currently.apparentTemperature;
 }
 
 var blocks = {
