@@ -1,10 +1,10 @@
 {
-	"name" : "BuildingLink Packages",
+	"name" : "Smart Home Dashboard",
 	"version" : "1.0",
-	"description" : "List packages awaiting pickup",
+	"description" : "Smart Home status display and overall dashboard",
 	"manifest_version" : 2,
 	"browser_action" : {
-		"default_title" : "BuildingLink Packages"
+		"default_title" : "SmartHome"
 	},
 	"background" : {
 		"scripts" : [
