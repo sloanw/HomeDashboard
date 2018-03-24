@@ -1,10 +1,21 @@
 var redraw = new Event('redraw');
+
+var weather_data = {};
+var package_data = [];
+
 window.onload = function () {
 	this.document.addEventListener('redraw', RefreshPage);
 
 
 	RefreshPackages();
-	RefreshWeather();
+
+	var WeatherWorker = new Worker('weather_bg.js');
+	WeatherWorker.onmessage = (data => {
+		weather_data = data.data;
+		this.document.dispatchEvent(redraw);
+	});
+
+	WeatherWorker.postMessage('');
 };
 
 function Scheduler(period, callback) {
@@ -61,44 +72,16 @@ function RefreshPage() {
 	var container = document.getElementById("packages");
 	container.innerHTML = "";
 
-	packages.forEach(package => {
+	package_data.forEach(package => {
 		var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
 		var node = document.createRange().createContextualFragment(html);
 		container.appendChild(node);
 	});
 
 	container = document.getElementById("weather");
-	container.innerText = weather.currently.apparentTemperature;
+	container.innerText = weather_data.currently.apparentTemperature;
 }
 
-var blocks = {
-    now : "currently",
-    min : "minutely",
-    hrs : "hourly",
-    day : "daily",
-    msg : "alerts",
-    flg : "flags"
-};
-
-var weather = [];
-function RefreshWeather() {
-	var apiURL = "https://api.darksky.net/forecast";
-	var lat = Weather.position.latitude;
-	var lon = Weather.position.longitude;
-	var url = `${apiURL}/${Weather.apikey}/${lat},${lon}`;
-
-	var args = { exclude: blocks.min + "," + blocks.day + "," + blocks.flg };
-
-	$http(url)
-		.get(args)
-		.then(response => {
-			weather = JSON.parse(response);
-			document.dispatchEvent(redraw);
-		})
-		.catch(err => { console.log(err) });
-}
-
-var packages = [];
 function RefreshPackages() {
 	oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
 		.then(token => {
@@ -116,7 +99,7 @@ function RefreshPackages() {
 			fetch(`${BuildingLink.apiURL}/EventLog/Resident/v1/Events?device-id=${BuildingLink.deviceID}&subscription-key=${BuildingLink.apikey}`, init)
 				.then((response) => response.json())
 				.then(function (data) {
-					packages = data.value;
+					package_data = data.value;
 					document.dispatchEvent(redraw);
 				})
 				.catch(err => alert(err));
