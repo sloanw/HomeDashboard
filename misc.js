@@ -44,7 +44,7 @@ function $http(url) {
 }
 
 function Scheduler(period, callback) {
-	window.setTimeout(function () {
+	this.setTimeout(function () {
 		callback();
 
 		Scheduler(period, callback);
