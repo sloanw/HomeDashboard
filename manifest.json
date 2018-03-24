@@ -16,13 +16,9 @@
 		"identity",
 		"https://api.buildinglink.com/*",
 		"https://auth.buildinglink.com/*",
-		"https://developer.buildinglink.com/*"
+		"https://developer.buildinglink.com/*",
+		"https://api.forecast.io/forecast/",
+    	"https://api.darksky.net/forecast/"
 	],
-	"oauth2" : {
-		"client_id" : "bldev-5ab053fc02a4a803e4447184",
-		"scopes" : [
-			"api_identity event_log_resident_read"
-		]
-	},
 	"key" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo4nc4v8J5DM0qK/19Kkqj9ZxUtPdrtcFE6a+uhE3BrMeTjPzNwB62RT0zMeczuofcvaMndmrTDKTb2fQix3gOmwra3bH/Ccx9qGI0VVwa8zFduLwjZwRLEGMSK1920xEMloBWlgQLhARKNC76JlK6tpxYpxXXMCPIqazMzJ2vouhkFrjQbbCB66nj/JbLqoxTOfPi0IykO2bEEO1adyuOtug1fWXVCUhxK8E/CuZGud/FeSrA0VQUXdFNb3FlGJ2q1zTENvOW4NQW1Q951C5LIGWctaCqRR3kytDghHQBX0WQFZlfb3703gV5wYAHwnxoWuYMO1M0zIfY7RFpZ8PIwIDAQAB"
 }

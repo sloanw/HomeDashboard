@@ -1,18 +1,22 @@
 var redraw = new Event('redraw');
+
+var weather_data = {};
+var package_data = [];
+
 window.onload = function () {
 	this.document.addEventListener('redraw', RefreshPage);
 
 
 	RefreshPackages();
-};
 
-function Scheduler(period, callback) {
-	window.setTimeout(function () {
-		callback();
-		
-		Scheduler(period, callback);
-	}, period);
-}
+	var WeatherWorker = new Worker('weather_bg.js');
+	WeatherWorker.onmessage = (data => {
+		weather_data = data.data;
+		this.document.dispatchEvent(redraw);
+	});
+
+	WeatherWorker.postMessage('');
+};
 
 var testData = (function () {
 	return {
@@ -59,15 +63,19 @@ var testData = (function () {
 function RefreshPage() {
 	var container = document.getElementById("packages");
 	container.innerHTML = "";
-	
-	packages.forEach(package => {
+
+	package_data.forEach(package => {
 		var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
 		var node = document.createRange().createContextualFragment(html);
 		container.appendChild(node);
 	});
+
+	if (weather_data && weather_data.currently) {
+		container = document.getElementById("weather");
+		container.innerText = weather_data.currently.apparentTemperature;
+	}	
 }
 
-var packages = [];
 function RefreshPackages() {
 	oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
 		.then(token => {
@@ -85,7 +93,7 @@ function RefreshPackages() {
 			fetch(`${BuildingLink.apiURL}/EventLog/Resident/v1/Events?device-id=${BuildingLink.deviceID}&subscription-key=${BuildingLink.apikey}`, init)
 				.then((response) => response.json())
 				.then(function (data) {
-					packages = data.value;
+					package_data = data.value;
 					document.dispatchEvent(redraw);
 				})
 				.catch(err => alert(err));
