@@ -18,14 +18,6 @@ window.onload = function () {
 	WeatherWorker.postMessage('');
 };
 
-function Scheduler(period, callback) {
-	window.setTimeout(function () {
-		callback();
-
-		Scheduler(period, callback);
-	}, period);
-}
-
 var testData = (function () {
 	return {
 		packages: [
