@@ -3,6 +3,9 @@ importScripts('misc.js');
 
 onmessage = function (e) {
 	RefreshWeather();
+
+	// Run every 5 min
+	Scheduler(300000, RefreshWeather);
 }
 
 var blocks = {
@@ -21,8 +24,6 @@ function RefreshWeather() {
 	var url = `${apiURL}/${Weather.apikey}/${lat},${lon}`;
 
 	var args = { exclude: blocks.min + "," + blocks.day + "," + blocks.flg };
-
-	var weather = {};
 
 	$http(url)
 		.get(args)
