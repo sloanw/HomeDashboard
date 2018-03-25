@@ -1,3 +1,11 @@
+div#weather {
+    width: 33%;
+    height: 80%;
+    display: inline-block;
+}
+
 div#packages {
-    width: 15em;
+    width: 33%;
+    height: 80%;
+    display: inline-block;
 }

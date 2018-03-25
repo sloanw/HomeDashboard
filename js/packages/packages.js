@@ -50,33 +50,16 @@ Modules.Packages = (function () {
 			imgContainer.appendChild(img);
 			container.appendChild(imgContainer);
 
-			var text = document.createElement('div');
-			text.setAttribute('class', 'description');
-			text.innerText = pkgDesc;
-			container.appendChild(text);
-
 			var style = document.createElement('style');
 			style.textContent = `.package {
-	height: 4em;
-	width: 13em;
-	display: inline-block;
-	margin: auto;
-	overflow: hidden;
-	margin: 1em;
-}
+					width: 32px;
+					margin: auto;
+					margin-bottom: 1em;
+				}
 
-.image {
-    display: block;
-    padding: 1em;
-    float: left;
-}
-
-.description {
-    height: 3em;
-    display: block;
-    width: 8em;
-    float: right;
-}`;
+				.image {
+					display: block;
+				}`;
 
 			shadow.appendChild(style);
 			shadow.appendChild(container);
