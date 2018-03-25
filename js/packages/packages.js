@@ -85,16 +85,26 @@ Modules.Packages = (function () {
 
 	customElements.define('package-item', PackageElement);
 
+	function SetupHTML() {
+		let node = document.createElement('div');
+		node.setAttribute('id', 'packages');
+		document.body.appendChild(node);
+	}
+
+	var PackageWorker;
 	return {
 		Init: function () {
 			document.addEventListener('redrawPackages', RedrawPackages);
 
-			var PackageWorker = new Worker('js/packages/packages_bg.js');
+			PackageWorker = new Worker('js/packages/packages_bg.js');
 			PackageWorker.onmessage = (data => {
 				package_data = data.data;
 				document.dispatchEvent(redrawPackages);
 			});
 
+			SetupHTML();
+		},
+		Start: function () {
 			oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
 				.then(token => PackageWorker.postMessage(token));
 		}

@@ -30,7 +30,7 @@ Modules.Weather = (function () {
 			var container = document.createElement('div');
 			container.setAttribute('class', 'forecast');
 
-			for (i = 0; i < this.attributes.length; i++) {
+			for (var i = 0; i < this.attributes.length; i++) {
 				let attr = this.attributes[i];
 
 				let node = document.createElement('div');
@@ -52,16 +52,26 @@ Modules.Weather = (function () {
 	}
 	customElements.define('weather-item', WeatherElement);
 
+	function SetupHTML() {
+		let node = document.createElement('div');
+		node.setAttribute('id', 'weather');
+		document.body.appendChild(node);
+	}
+
+	var WeatherWorker;
 	return {
 		Init: function () {
 			document.addEventListener('redrawWeather', RedrawWeather);
 
-			var WeatherWorker = new Worker('js/weather/weather_bg.js');
+			WeatherWorker = new Worker('js/weather/weather_bg.js');
 			WeatherWorker.onmessage = (data => {
 				weather_data = data.data;
 				document.dispatchEvent(redrawWeather);
 			});
 
+			SetupHTML();
+		},
+		Start: function () {
 			WeatherWorker.postMessage('');
 		}
 	};
