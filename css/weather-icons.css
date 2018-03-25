@@ -28,14 +28,11 @@
 	font-style: normal;
 }
 .wi {
-	font-family: 'weathericons';
-	font-style: normal;
-	font-weight: normal;
-	line-height: 1;
-    padding-top: 0.25em;
-    /*font-size: 40pt;*/
-	font-size: 35pt;
-	-webkit-font-smoothing: antialiased;
+    font-family: 'weathericons';
+    font-size: 35pt;
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+    text-align: center;
 }
 .wi-fw {
 	text-align: center;

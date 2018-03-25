@@ -47,6 +47,16 @@ Modules.Weather = (function () {
 				container.appendChild(node);
 			}
 
+			var style = document.createElement('style');
+			style.textContent = `div {
+				text-align: center;
+			}
+			
+			.temp::after {
+				content: "\\00b0";
+			}`;
+
+			shadow.appendChild(style);
 			shadow.appendChild(container);
 		}
 	}
