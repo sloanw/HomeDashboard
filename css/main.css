@@ -1,11 +1,29 @@
-div#weather {
-    width: 33%;
-    height: 80%;
-    display: inline-block;
+@font-face {
+	font-family: 'Dosis';
+	src: url('/font/Dosis-Light.ttf');
+	font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    background-color: #2F323B;
+}
+
+div{
+    width: 30%;
+    height: 70%;
+    position: absolute;
+    top: 1.5%;
+    background-color: #45464A;
+    font-family: 'Dosis', sans-serif;
+    color: #FFFFFD;
+    border-radius: 2px;
 }
 
 div#packages {
-    width: 33%;
-    height: 80%;
-    display: inline-block;
+    left: 1.5%;
+}
+
+div#weather {
+    left: 33.33%;
 }
