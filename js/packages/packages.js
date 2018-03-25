@@ -1,4 +1,6 @@
 var Packages = (function () {
+	var redrawPackages = new Event('redrawPackages');
+
 	var package_data = [];
 
 	function RedrawPackages() {
@@ -83,12 +85,12 @@ var Packages = (function () {
 
 	return {
 		Init: function () {
-			document.addEventListener('redraw', RedrawPackages);
+			document.addEventListener('redrawPackages', RedrawPackages);
 
 			var PackageWorker = new Worker('js/packages/packages_bg.js');
 			PackageWorker.onmessage = (data => {
 				package_data = data.data;
-				document.dispatchEvent(redraw);
+				document.dispatchEvent(redrawPackages);
 			});
 
 			oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')

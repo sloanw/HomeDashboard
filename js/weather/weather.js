@@ -1,9 +1,12 @@
 var Weather = (function () {
+	var redrawWeather = new Event('redrawWeather');
+
 	var weather_data = {};
 
 	function RedrawWeather() {
 		let container = document.getElementById("weather");
-
+		container.innerHTML = '';
+		
 		if (weather_data && weather_data.currently) {
 			var period = weather_data.currently;
 			var html = `<weather-item temp="${period.apparentTemperature}" icon="${period.icon}" />`;
@@ -53,12 +56,12 @@ var Weather = (function () {
 
 	return {
 		Init: function () {
-			document.addEventListener('redraw', RedrawWeather);
+			document.addEventListener('redrawWeather', RedrawWeather);
 
 			var WeatherWorker = new Worker('js/weather/weather_bg.js');
 			WeatherWorker.onmessage = (data => {
 				weather_data = data.data;
-				document.dispatchEvent(redraw);
+				document.dispatchEvent(redrawWeather);
 			});
 
 			WeatherWorker.postMessage('');
