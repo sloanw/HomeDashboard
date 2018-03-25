@@ -13,7 +13,7 @@ div{
     width: 30%;
     height: 70%;
     position: absolute;
-    top: 1.5%;
+    top: 3%;
     background-color: #45464A;
     font-family: 'Dosis', sans-serif;
     color: #FFFFFD;
@@ -21,9 +21,13 @@ div{
 }
 
 div#packages {
-    left: 1.5%;
+    left: 3%;
 }
 
 div#weather {
-    left: 33.33%;
+    left: 35%;
+}
+
+div#subway {
+    right: 3%;
 }
