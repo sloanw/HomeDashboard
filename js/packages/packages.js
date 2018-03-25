@@ -85,7 +85,7 @@ var Packages = (function () {
 		Init: function () {
 			document.addEventListener('redraw', RedrawPackages);
 
-			var PackageWorker = new Worker('packages_bg.js');
+			var PackageWorker = new Worker('js/packages/packages_bg.js');
 			PackageWorker.onmessage = (data => {
 				package_data = data.data;
 				document.dispatchEvent(redraw);

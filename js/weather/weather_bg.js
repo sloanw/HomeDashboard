@@ -1,5 +1,5 @@
-importScripts('secret.js');
-importScripts('misc.js');
+importScripts('/js/secret.js');
+importScripts('/js/misc.js');
 
 onmessage = function (e) {
 	RefreshWeather();

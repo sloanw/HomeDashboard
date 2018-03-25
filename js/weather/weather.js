@@ -14,7 +14,7 @@ var Weather = (function () {
 		Init: function () {
 			document.addEventListener('redraw', RedrawWeather);
 
-			var WeatherWorker = new Worker('weather_bg.js');
+			var WeatherWorker = new Worker('js/weather/weather_bg.js');
 			WeatherWorker.onmessage = (data => {
 				weather_data = data.data;
 				document.dispatchEvent(redraw);
