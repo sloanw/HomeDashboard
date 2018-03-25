@@ -1,4 +1,6 @@
-var Packages = (function () {
+var Modules = (Modules || {});
+
+Modules.Packages = (function () {
 	var redrawPackages = new Event('redrawPackages');
 
 	var package_data = [];

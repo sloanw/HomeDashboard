@@ -1,4 +1,6 @@
-var Weather = (function () {
+var Modules = (Modules || {});
+
+Modules.Weather = (function () {
 	var redrawWeather = new Event('redrawWeather');
 
 	var weather_data = {};
@@ -6,7 +8,7 @@ var Weather = (function () {
 	function RedrawWeather() {
 		let container = document.getElementById("weather");
 		container.innerHTML = '';
-		
+
 		if (weather_data && weather_data.currently) {
 			var period = weather_data.currently;
 			var html = `<weather-item temp="${period.apparentTemperature}" icon="${period.icon}" />`;

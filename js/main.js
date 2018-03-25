@@ -1,4 +1,6 @@
 window.onload = function () {
-	Packages.Init();
-	Weather.Init();
+	for (ModuleName in Modules) {
+		let Module = Modules[ModuleName];
+		Module.Init();
+	}
 };
