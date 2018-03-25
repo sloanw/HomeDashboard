@@ -1,14 +1,17 @@
 importScripts('/js/secret.js');
 importScripts('/js/misc.js');
 
+var token;
 onmessage = function (e) {
-	RefreshPackages(e.data);
+	token = e.data;
+
+	RefreshPackages();
 
 	// Run every 5 min
 	Scheduler(300000, RefreshPackages);
 }
 
-function RefreshPackages(token) {
+function RefreshPackages() {
 	let init = {
 		method: 'GET',
 		async: true,
