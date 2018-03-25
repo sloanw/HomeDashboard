@@ -11,7 +11,7 @@ Modules.Weather = (function () {
 
 		if (weather_data && weather_data.currently) {
 			var period = weather_data.currently;
-			var html = `<weather-item temp="${period.apparentTemperature}" icon="${period.icon}" />`;
+			var html = `<weather-item temp="${period.apparentTemperature}" icon="${period.icon}" summary="${period.summary}" />`;
 			var node = document.createRange().createContextualFragment(html);
 			container.appendChild(node);
 		}
