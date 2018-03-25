@@ -47,10 +47,6 @@ Modules.Weather = (function () {
 				container.appendChild(node);
 			}
 
-			var style = document.createElement('style');
-			style.textContent = ``;
-
-			shadow.appendChild(style);
 			shadow.appendChild(container);
 		}
 	}
