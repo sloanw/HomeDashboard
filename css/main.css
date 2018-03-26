@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+	font-family: 'Noto-Sans';
+	src: url('/font/NotoSans-Regular.ttf');
+	font-weight: normal;
+    font-style: normal;
+}
+
 body{
     background-color: #2F323B;
 }
@@ -30,4 +37,6 @@ div#weather {
 
 div#subway {
     right: 3%;
+    font-family: 'Noto-Sans', sans-serif;
+    font-size: .4em;
 }

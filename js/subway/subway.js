@@ -115,7 +115,8 @@ Modules.Subway = (function () {
 				//do nothing
 			}
 			var node = document.createRange().createContextualFragment(html);
-			container.appendChild(node);
+			symbolContainer.appendChild(node);
+			container.appendChild(symbolContainer);
 
 			var node = document.createElement('div');
 			node.setAttribute('id', 'status');
@@ -141,7 +142,7 @@ Modules.Subway = (function () {
 				border-radius: 1em;
 			}
 
-			.image {
+			.symbols {
 				float: left;
 			}
 			
