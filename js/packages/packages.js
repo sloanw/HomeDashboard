@@ -9,11 +9,15 @@ Modules.Packages = (function () {
 		var container = document.getElementById("packages");
 		container.innerHTML = "";
 
-		package_data.forEach(package => {
-			var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
-			var node = document.createRange().createContextualFragment(html);
-			container.appendChild(node);
-		});
+		if (package_data.length > 0) {
+			package_data.forEach(package => {
+				var html = `<package-item type="${package.Description}" descr="${package.OpenComment}" />`;
+				var node = document.createRange().createContextualFragment(html);
+				container.appendChild(node);
+			});
+		} else {
+			container.innerHTML = "<p>No Packages</p>";
+		}
 	}
 
 	class PackageElement extends HTMLElement {

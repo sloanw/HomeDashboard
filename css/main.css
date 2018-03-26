@@ -25,6 +25,7 @@ div{
     font-family: 'Dosis', sans-serif;
     color: #FFFFFD;
     border-radius: 2px;
+    text-align: center;
 }
 
 div#packages {
