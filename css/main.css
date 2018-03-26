@@ -26,6 +26,7 @@ div{
     color: #FFFFFD;
     border-radius: 2px;
     text-align: center;
+    font-size: x-large;
 }
 
 div#packages {
@@ -39,5 +40,5 @@ div#weather {
 div#subway {
     right: 3%;
     font-family: 'Noto-Sans', sans-serif;
-    font-size: .4em;
+    font-size: .8em;
 }
