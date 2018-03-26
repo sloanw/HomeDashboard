@@ -88,6 +88,10 @@ Modules.Packages = (function () {
 				package_data = data.data;
 				document.dispatchEvent(redrawPackages);
 			});
+			PackageWorker.onerror = (error => {
+				oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
+					.then(token => PackageWorker.postMessage(token));
+			});
 
 			SetupHTML();
 		},
