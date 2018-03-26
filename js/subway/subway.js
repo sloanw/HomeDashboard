@@ -148,7 +148,7 @@ Modules.Subway = (function () {
 			}
 			
 			.green { background-color: #00933C; }
-			.lightgreen { background-color: #78CE47; }
+			.lightgreen { background-color: #6CBE45; }
 			.purple { background-color: #B933AD; }
 			.red { background-color: #EE352E; }
 			.orange { background-color: #FF6319; }
