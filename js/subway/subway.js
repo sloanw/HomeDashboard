@@ -147,15 +147,16 @@ Modules.Subway = (function () {
 				margin-left: 5%;
 			}
 			
-			.green { background-color: #009933; }
+			.green { background-color: #00933C; }
 			.lightgreen { background-color: #78CE47; }
-			.purple { background-color: #BA34AD; }
-			.red { background-color: #FF3333; }
-			.orange { background-color: #FF6619; }
-			.yellow { background-color: #FFCC00; }
+			.purple { background-color: #B933AD; }
+			.red { background-color: #EE352E; }
+			.orange { background-color: #FF6319; }
+			.yellow { background-color: #FCCC0A; }
 			.grey { background-color: #808183; }
+			.lightgrey { background-color: #A7A9AC; }
 			.brown { background-color: #996633; }
-			.blue { background-color: #2850BA; }
+			.blue { background-color: #0039A6; }
 
 
 			#status {
