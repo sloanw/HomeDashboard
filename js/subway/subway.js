@@ -144,6 +144,7 @@ Modules.Subway = (function () {
 
 			.symbols {
 				float: left;
+				margin-left: 5%;
 			}
 			
 			.green { background-color: #009933; }
@@ -159,6 +160,7 @@ Modules.Subway = (function () {
 
 			#status {
 				float: right;
+				margin-right: 5%;
 			}`;
 
 			shadow.appendChild(style);
