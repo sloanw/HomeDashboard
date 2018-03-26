@@ -158,6 +158,10 @@ Modules.Subway = (function () {
 			.brown { background-color: #996633; }
 			.blue { background-color: #0039A6; }
 
+			.GOODSERVICE { color: #99BF2C; }
+			.PLANNEDWORK { color: #BF762C; }
+			.SERVICECHANGE { color: #BFA42C; }
+			.DELAYS { color: #BF2C4E; }
 
 			#status {
 				float: right;
