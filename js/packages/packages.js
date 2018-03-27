@@ -73,31 +73,53 @@ Modules.Packages = (function () {
 	customElements.define('package-item', PackageElement);
 
 	function SetupHTML() {
-		let node = document.createElement('div');
-		node.setAttribute('id', 'packages');
-		document.body.appendChild(node);
+		if (!document.querySelector('div#packages')) {
+			let node = document.createElement('div');
+			node.setAttribute('id', 'packages');
+			document.body.appendChild(node);
+		}
+	}
+
+	function _Reset() {
+		_Stop();
+		_Init();
+		_Start();
+	}
+
+	function _Stop() {
+		PackageWorker.terminate();
+	}
+
+	function _Init() {
+		document.addEventListener('redrawPackages', RedrawPackages);
+
+		PackageWorker = new Worker('js/packages/packages_bg.js');
+		PackageWorker.onmessage = (data => {
+
+			package_data = data.data;
+
+			if (package_data.refresh) {
+				// oAuth.RefreshToken(BuildingLink, package_data.refresh)
+				// 	.then(update => document.dispatchEvent(update));
+				_Reset();
+			} else {
+				document.dispatchEvent(redrawPackages);
+			}
+		});
+
+		SetupHTML();
+	}
+
+	function _Start() {
+		oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
+			.then(data => PackageWorker.postMessage(data));
 	}
 
 	var PackageWorker;
 	return {
-		Init: function () {
-			document.addEventListener('redrawPackages', RedrawPackages);
-
-			PackageWorker = new Worker('js/packages/packages_bg.js');
-			PackageWorker.onmessage = (data => {
-				package_data = data.data;
-				document.dispatchEvent(redrawPackages);
-			});
-			PackageWorker.onerror = (error => {
-				oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
-					.then(token => PackageWorker.postMessage(token));
-			});
-
-			SetupHTML();
-		},
-		Start: function () {
-			oAuth.GetAuthToken(BuildingLink, 'api_identity event_log_resident_read')
-				.then(token => PackageWorker.postMessage(token));
-		}
+		Init: _Init,
+		Start: _Start,
+		Stop: _Stop,
+		Reset: _Reset
 	};
 }());

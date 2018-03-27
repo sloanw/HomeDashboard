@@ -1,9 +1,11 @@
 importScripts('/js/secret.js');
 importScripts('/js/misc.js');
 
-var token;
+var access_token;
+var refresh_token;
 onmessage = function (e) {
-	token = e.data;
+	access_token = e.data.access_token;
+	refresh_token = e.data.refresh_token;
 
 	RefreshPackages();
 
@@ -12,11 +14,12 @@ onmessage = function (e) {
 }
 
 function RefreshPackages() {
+
 	let init = {
 		method: 'GET',
 		async: true,
 		headers: {
-			Authorization: 'bearer ' + token,
+			Authorization: 'bearer ' + access_token,
 			'Content-Type': 'application/json',
 			'Ocp-Apim-Subscription-Key': BuildingLink.apikey
 		},
@@ -24,9 +27,17 @@ function RefreshPackages() {
 	};
 
 	fetch(`${BuildingLink.apiURL}/EventLog/Resident/v1/Events?device-id=${BuildingLink.deviceID}&subscription-key=${BuildingLink.apikey}`, init)
-		.then((response) => response.json())
+		.then(function (response) {
+			if (!response.ok) {
+				return postMessage({ refresh: refresh_token });
+			}
+
+			return response.json();
+		})
 		.then(function (data) {
 			postMessage(data.value);
 		})
-		.catch(err => alert(err));
+		.catch(err => {
+			postMessage({ error: err.message });
+		});
 }
