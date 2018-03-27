@@ -98,9 +98,7 @@ Modules.Packages = (function () {
 
 			package_data = data.data;
 
-			if (package_data.refresh) {
-				// oAuth.RefreshToken(BuildingLink, package_data.refresh)
-				// 	.then(update => document.dispatchEvent(update));
+			if (package_data.error) {
 				_Reset();
 			} else {
 				document.dispatchEvent(redrawPackages);

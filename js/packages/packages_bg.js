@@ -29,7 +29,7 @@ function RefreshPackages() {
 	fetch(`${BuildingLink.apiURL}/EventLog/Resident/v1/Events?device-id=${BuildingLink.deviceID}&subscription-key=${BuildingLink.apikey}`, init)
 		.then(function (response) {
 			if (!response.ok) {
-				return postMessage({ refresh: refresh_token });
+				return postMessage({ error: response.statusText });
 			}
 
 			return response.json();
