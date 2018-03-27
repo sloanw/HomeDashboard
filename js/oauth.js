@@ -18,6 +18,26 @@ var oAuth = (function () {
 					resolve(_GetAuthToken(settings, response));
 				});
 			});
+		},
+		RefreshToken: async function (settings, token) {
+			let authJSON = {
+				client_id: settings.clientID,
+				client_secret: settings.clientSecret,
+				grant_type: 'refresh_token',
+				refresh_token: token
+			}
+
+			let init = {
+				method: 'POST',
+				async: true,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			}
+
+			return await fetch(`${settings.authURL}/connect/token`, init)
+				.then(res => res.json())
+				.then(data => { return data });
 		}
 	};
 
@@ -88,15 +108,12 @@ var oAuth = (function () {
 
 		return await fetch(`${settings.authURL}/connect/token`, init)
 			.then(res => res.json())
-			.then(data =>{
-				var error = data.error;
-				var token = data.access_token;
-
-				if (error) {
+			.then(data => {
+				if (data.error) {
 					throw error;
 				}
 
-				return token;
+				return data;
 			});
 	}
 }());
