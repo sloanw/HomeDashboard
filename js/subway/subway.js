@@ -39,9 +39,11 @@ Modules.Subway = (function () {
 
 		for (i in lines) {
 			var line = lines[i];
-			var html = `<subway-item line="${line.name}" status="${line.status}" />`;
-			var node = document.createRange().createContextualFragment(html);
-			container.appendChild(node);
+			if (line.name != "SIR") { /* Nobody cares about Staten Island */
+				var html = `<subway-item line="${line.name}" status="${line.status}" />`;
+				var node = document.createRange().createContextualFragment(html);
+				container.appendChild(node);
+			}	
 		}
 	}
 
@@ -59,70 +61,42 @@ Modules.Subway = (function () {
 			var status = this.hasAttribute('status') ? this.getAttribute('status') : undefined;
 
 			var shadow = this.attachShadow({ mode: 'open' });
-
-			var container = document.createElement('div');
-			container.setAttribute('class', 'subway');
-
-			var symbolContainer = document.createElement('div');
-			symbolContainer.setAttribute('class', 'symbols');
-
-			var html = "";
-			switch (line) {
-				case '123':
-					html += "<span class='red'>1</span>";
-					html += "<span class='red'>2</span>";
-					html += "<span class='red'>3</span>";
-					break;
-				case '7':
-					html += "<span class='purple'>7</span>";
-					break;
-				case '456':
-					html += "<span class='green'>4</span>";
-					html += "<span class='green'>5</span>";
-					html += "<span class='green'>6</span>";
-					break;
-				case 'ACE':
-					html += "<span class='blue'>A</span>";
-					html += "<span class='blue'>C</span>";
-					html += "<span class='blue'>E</span>";
-					break;
-				case 'BDFM':
-					html += "<span class='orange'>B</span>";
-					html += "<span class='orange'>D</span>";
-					html += "<span class='orange'>F</span>";
-					html += "<span class='orange'>M</span>";
-					break;
-				case 'G':
-					html += "<span class='lightgreen'>G</span>";
-					break;
-				case 'JZ':
-					html += "<span class='brown'>J</span>";
-					html += "<span class='brown'>Z</span>";
-					break;
-				case 'L':
-					html += "<span class='grey'>L</span>";
-					break;
-				case 'NQR':
-					html += "<span class='yellow'>N</span>";
-					html += "<span class='yellow'>Q</span>";
-					html += "<span class='yellow'>R</span>";
-					html += "<span class='yellow'>W</span>";
-					break;
-				case 'S':
-					html += "<span class='grey'>S</span>";
-					break;
-				default:
-				//do nothing
+			
+			var colours = {
+				"1": "red",
+				"2": "red",
+				"3": "red",
+				"7": "purple",
+				"4": "green",
+				"5": "green",
+				"6": "green",
+				"A": "blue",
+				"C": "blue",
+				"E": "blue",
+				"B": "orange",
+				"D": "orange",
+				"F": "orange",
+				"M": "orange",
+				"G": "lightgreen",
+				"J": "brown",
+				"Z": "brown",
+				"L": "grey",
+				"N": "yellow",
+				"Q": "yellow",
+				"R": "yellow",
+				"W": "yellow",
+				"S": "grey"
 			}
-			var node = document.createRange().createContextualFragment(html);
-			symbolContainer.appendChild(node);
-			container.appendChild(symbolContainer);
 
-			var node = document.createElement('div');
-			node.setAttribute('id', 'status');
-			node.setAttribute('class', status.replace(' ', ''));
-			node.innerText = status;
-			container.appendChild(node);
+			var spans = "";
+			line.split('').forEach(symbol => {
+				spans += `<span class='${colours[symbol]}'>${symbol}</span>`;
+			});
+
+			var statuscode = status.replace(' ', '');
+			var html = `<div class="subway"><div class="symbols">${spans}</div><div id="status" class="${statuscode}">${status}</div></div>`;
+			var node = document.createRange().createContextualFragment(html);
+			shadow.appendChild(node);
 
 			var style = document.createElement('style');
 			style.textContent = `div {
@@ -158,7 +132,7 @@ Modules.Subway = (function () {
 			.brown { background-color: #996633; }
 			.blue { background-color: #0039A6; }
 
-			.GOODSERVICE { color: #99BF2C; }
+			.GOODSERVICE { color: #9E9E9E; }
 			.PLANNEDWORK { color: #BF762C; }
 			.SERVICECHANGE { color: #BFA42C; }
 			.DELAYS { color: #BF2C4E; }
@@ -166,11 +140,10 @@ Modules.Subway = (function () {
 			#status {
 				float: right;
 				margin-right: 5%;
+				width: 55%;
 			}`;
 
 			shadow.appendChild(style);
-
-			shadow.appendChild(container);
 		}
 	}
 
